@@ -12,10 +12,10 @@ __global__ void NearestNeighbourKernel(Point *train, Point *test, int *result, i
 	unsigned int i = blockId * (blockDim.x * blockDim.y) + (threadIdx.y * blockDim.x) + threadIdx.x;
 	if (i < testSize)
 	{
-		int minDist;
-		int minID;
-		int dist;
-		uint4s minMax;
+		__shared__ int minDist;
+		__shared__ int minID;
+		__shared__ int dist;
+		__shared__ uint4s minMax;
 
 		minDist = INT32_MAX;
 		minID = -1;
