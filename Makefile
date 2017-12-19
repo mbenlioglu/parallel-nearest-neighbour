@@ -219,7 +219,7 @@ main.o:./src/main.cpp
 		$(EXEC) $(NVCC) $(INCLUDES) $(ALL_CCFLAGS) -Xcompiler -std=c++14 -Xcompiler -fopenmp $(GENCODE_FLAGS) -o $@ -c $+
 
 nearestNeighbour:nearestNeighbour.o main.o
-		$(EXEC) $(HOST_COMPILER) -o $@ $+ $(LIBRARIES) -fpermissive -O3 -std=c++14
+		$(EXEC) $(HOST_COMPILER) -o $@ $+ $(LIBRARIES) -fpermissive -O3 -std=c++14 -fopenmp
 		$(EXEC) mkdir -p ./bin/$(TARGET_ARCH)/$(TARGET_OS)/$(BUILD_TYPE)
 		$(EXEC) cp $@ ./bin/$(TARGET_ARCH)/$(TARGET_OS)/$(BUILD_TYPE)
 
