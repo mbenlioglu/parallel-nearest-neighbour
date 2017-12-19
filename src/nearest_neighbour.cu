@@ -8,8 +8,9 @@
 
 __global__ void NearestNeighbourKernel(Point *train, Point *test, int *result, int trainSize, int testSize)
 {
-	int blockId = blockIdx.x + blockIdx.y * gridDim.x;
-	unsigned int i = blockId * (blockDim.x * blockDim.y) + (threadIdx.y * blockDim.x) + threadIdx.x;
+	//int blockId = blockIdx.x + blockIdx.y * gridDim.x;
+	//unsigned int i = blockId * (blockDim.x * blockDim.y) + (threadIdx.y * blockDim.x) + threadIdx.x;
+	unsigned int i = blockIdx.x * blockDim.x * blockDim.y + threadIdx.y * blockDim.x + threadIdx.x;
 	if (i < testSize)
 	{
 		__shared__ int minDist;
