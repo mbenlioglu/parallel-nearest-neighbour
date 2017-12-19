@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "parallel-nearest-neighbour", "parallel-nearest-neighbour\parallel-nearest-neighbour.vcxproj", "{9E22DCDA-ED1F-4E9A-A5E2-DEBF1353E236}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "parallel-nearest-neighbour", "src\parallel-nearest-neighbour.vcxproj", "{9E22DCDA-ED1F-4E9A-A5E2-DEBF1353E236}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
