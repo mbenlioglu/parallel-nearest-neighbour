@@ -87,11 +87,12 @@ int main(int argc, char *argv[])
 	// Get executable name from path
 #ifdef WIN32
 	baseName = baseName.substr(baseName.rfind('\\') + 1);
+	char *trainFile = "../data/train.txt", *testFile = "../data/test.txt"; // train and test files
 #else
 	baseName = baseName.substr(baseName.rfind('/') + 1);
+	char *trainFile = "./data/train.txt", *testFile = "./data/test.txt"; // train and test files
 #endif // WIN32
 
-	char *trainFile = "../data/train.txt", *testFile = "../data/test.txt"; // train and test files
 	int devID = 0; // selected device id
 	switch (argc)
 	{
