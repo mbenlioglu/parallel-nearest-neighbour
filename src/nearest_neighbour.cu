@@ -121,7 +121,6 @@ cudaError_t CudaNearestNeighbour(Point *train, Point *test, int *result, int tra
 	//===========================================================================================================================
 	// Launch a kernel on the GPU with one thread for each element, and check for errors.
 	//
-	printf("%d, %d\n", testSize, testSize / numThreads);
 	NearestNeighbourKernel<<<(testSize+THREADS_PER_BLOCK-1)/THREADS_PER_BLOCK, dimBlock>>>(dev_train, dev_test, dev_result, *dev_trainSize, *dev_testSize);
 
 	//===========================================================================================================================
