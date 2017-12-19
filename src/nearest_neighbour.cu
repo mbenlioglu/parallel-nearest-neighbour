@@ -105,6 +105,18 @@ cudaError_t CudaNearestNeighbour(Point *train, Point *test, int *result, int tra
 		fprintf(stderr, "cudaMemcpy failed!");
 		goto Error;
 	}
+	
+	cudaStatus = cudaMemcpy(dev_testSize, &testSize, sizeof(int), cudaMemcpyHostToDevice);
+	if (cudaStatus != cudaSuccess) {
+		fprintf(stderr, "cudaMemcpy failed!");
+		goto Error;
+	}
+
+	cudaStatus = cudaMemcpy(dev_trainSize, &trainSize, sizeof(int), cudaMemcpyHostToDevice);
+	if (cudaStatus != cudaSuccess) {
+		fprintf(stderr, "cudaMemcpy failed!");
+		goto Error;
+	}
 
 	//===========================================================================================================================
 	// Launch a kernel on the GPU with one thread for each element, and check for errors.
@@ -140,6 +152,8 @@ Error:
 	cudaFree(dev_result);
 	cudaFree(dev_train);
 	cudaFree(dev_test);
+	cudaFree(dev_testSize);
+	cudaFree(dev_trainSize);
 
 	return cudaStatus;
 }
