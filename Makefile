@@ -216,7 +216,7 @@ nearestNeighbour.o:./src/nearest_neighbour.cu
 		$(EXEC) $(NVCC) $(INCLUDES) $(ALL_CCFLAGS) $(GENCODE_FLAGS) -o $@ -c $<
 
 main.o:./src/main.cpp
-		$(EXEC) $(NVCC) $(INCLUDES) $(ALL_CCFLAGS) -Xcompiler -std=c++14 $(GENCODE_FLAGS) -o $@ -c $+
+		$(EXEC) $(NVCC) $(INCLUDES) $(ALL_CCFLAGS) -Xcompiler -std=c++14 -Xcompiler -fopenmp $(GENCODE_FLAGS) -o $@ -c $+
 
 nearestNeighbour:nearestNeighbour.o main.o
 		$(EXEC) $(HOST_COMPILER) -o $@ $+ $(LIBRARIES) -fpermissive -O3 -std=c++14
