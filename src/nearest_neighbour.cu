@@ -12,9 +12,10 @@ __global__ void NearestNeighbourKernel(Point *train, Point *test, int *result, i
 	unsigned int i = blockId * (blockDim.x * blockDim.y) + (threadIdx.y * blockDim.x) + threadIdx.x;
 	if (i < testSize)
 	{
-		__shared__ int minDist;
-		__shared__ int minID;
-		__shared__ int dist;
+		int minDist;
+		int minID;
+		int dist;
+		uint4s minMax;
 
 		minDist = INT32_MAX;
 		minID = -1;
@@ -25,10 +26,14 @@ __global__ void NearestNeighbourKernel(Point *train, Point *test, int *result, i
 			// Calculate distance between points
 			for (int k = 0; k < 8; k++)
 			{
-				dist += train[j][k].first > test[i][k].first ? (train[j][k].first - test[i][k].first) * (train[j][k].first - test[i][k].first)
-					: (test[i][k].first - train[j][k].first) * (test[i][k].first - train[j][k].first);
-				dist += train[j][k].second > test[i][k].second ? (train[j][k].second - test[i][k].second) * (train[j][k].second - test[i][k].second)
-					: (test[i][k].second - train[j][k].second) * (test[i][k].second - train[j][k].second);
+				// calculate max-min of 2 numbers without branching (hack)
+				minMax.first = train[j][k].first ^ ((test[i][k].first ^ train[j][k].first) & -(test[i][k].first < train[j][k].first)); // min(x, y)
+				minMax.second = test[i][k].first ^ ((test[i][k].first ^ train[j][k].first) & -(test[i][k].first < train[j][k].first)); // max(x, y)
+				dist += (minMax.second - minMax.first) * (minMax.second - minMax.first); // (max(x,y)-min(x,y))^2
+
+				minMax.first = train[j][k].second ^ ((test[i][k].second ^ train[j][k].second) & -(test[i][k].second < train[j][k].second)); // min(x, y)
+				minMax.second = test[i][k].second ^ ((test[i][k].second ^ train[j][k].second) & -(test[i][k].second < train[j][k].second)); // max(x, y)
+				dist += (minMax.second - minMax.first) * (minMax.second - minMax.first); // (max(x,y)-min(x,y))^2
 			}
 			if (dist < minDist)
 			{
