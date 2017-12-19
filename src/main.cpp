@@ -16,6 +16,7 @@ extern "C" {
 }
 #endif /*__cplusplus*/
 
+#include <cstring>
 #include <string>
 #include <iostream>
 #include <fstream>
