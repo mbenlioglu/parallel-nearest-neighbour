@@ -27,7 +27,7 @@ extern "C" {
 //#define DEBUG;
 
 // kernels
-__global__ void NearestNeighbourKernel(Point *train, Point *test, int *result, int trainSize, int testSize);
+__global__ void NearestNeighbourKernel(Point *train, Point *test, int *result, int *trainSize, int *testSize);
 
 // drivers
 cudaError_t CudaNearestNeighbour(Point *train, Point *test, int *result, int trainSize, int testSize);
