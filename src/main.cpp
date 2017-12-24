@@ -85,7 +85,7 @@ int main(int argc, char *argv[])
 	std::string fillerDashes(100, '-');
 
 	// Get executable name from path
-#ifdef WIN32
+#ifdef _WIN32
 	baseName = baseName.substr(baseName.rfind('\\') + 1);
 	char *trainFile = "../data/train.txt", *testFile = "../data/test.txt"; // train and test files
 #else

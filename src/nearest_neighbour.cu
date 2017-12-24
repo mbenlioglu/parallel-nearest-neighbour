@@ -6,13 +6,13 @@
 
 #define THREADS_PER_BLOCK 1024
 
-__global__ void NearestNeighbourKernel(Point *train, Point *test, int *result, int trainSize, int testSize)
+__global__ void NearestNeighbourKernel(Point *train, Point *test, int *result, int *trainSize, int *testSize)
 {
 	//int blockId = blockIdx.x + blockIdx.y * gridDim.x;
 	//unsigned int i = blockId * (blockDim.x * blockDim.y) + (threadIdx.y * blockDim.x) + threadIdx.x;
 	int blockId = blockIdx.y * gridDim.x + blockIdx.x;
 	int i = blockId * blockDim.x + threadIdx.x;
-	if (i < testSize)
+	if (i < *testSize)
 	{
 		__shared__ int minDist;
 		__shared__ int minID;
@@ -22,7 +22,7 @@ __global__ void NearestNeighbourKernel(Point *train, Point *test, int *result, i
 		minDist = INT32_MAX;
 		minID = -1;
 
-		for (int j = 0; j < trainSize; j++)
+		for (int j = 0; j < *trainSize; j++)
 		{
 			dist = 0;
 			// Calculate distance between points
