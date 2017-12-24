@@ -268,7 +268,11 @@ int main(int argc, char *argv[])
 	//
 	std::cout << "Starting on GPU...";
 	start = omp_get_wtime();
-	NearestNeighbourKernel(trainPoints, testPoints, result2, trainSize, testSize);
+	cudaStatus = CudaNearestNeighbour(trainPoints, testPoints, result2, trainSize, testSize);
+	if (cudaStatus != cudaSuccess) {
+		fprintf(stderr, "CudaNearestNeighbour failed!");
+		return EXIT_FAILURE;
+	}
 	end = omp_get_wtime();
 	double elapsed_gpu = end - start;
 	std::cout << " ended.\n";
@@ -278,10 +282,6 @@ int main(int argc, char *argv[])
 	std::cout << s;
 #endif // DEBUG
 
-	if (cudaStatus != cudaSuccess) {
-		fprintf(stderr, "CudaClosenessCent failed!");
-		return EXIT_FAILURE;
-	}
 	std::cout << " ended\n";
 	// cudaDeviceReset must be called before exiting in order for profiling and
 	// tracing tools such as Nsight and Visual Profiler to show complete traces.
